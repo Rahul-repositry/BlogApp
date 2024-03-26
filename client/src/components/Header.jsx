@@ -13,6 +13,7 @@ export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+
   //   const { theme } = useSelector((state) => state.theme);
   const [searchTerm, setSearchTerm] = useState("");
   let theme = "light";
