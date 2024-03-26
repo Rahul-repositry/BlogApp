@@ -31,7 +31,25 @@ app.listen(3000, () => {
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
+
+  let message = "Internal Server Error"; // Default message
+
+  // Error mapping based on error type and properties
+  if (err.name === "CastError") {
+    message = `Invalid value for path '${err.path}': ${err.value}!`;
+  } else if (err.code === 11000) {
+    message = "User already exists.";
+  } else if (err.name === "ValidationError") {
+    // Provide more specific validation errors from the error object
+    const validationErrors = err.errors
+      .map((error) => error.message)
+      .join(", ");
+    message = `invalid input data :  ${validationErrors}`;
+  } else {
+    // Consider logging unhandled errors for debugging
+    console.error("Unhandled error:", err);
+  }
+
   res.status(statusCode).json({
     success: false,
     statusCode,
