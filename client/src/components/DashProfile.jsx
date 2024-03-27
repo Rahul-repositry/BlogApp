@@ -13,6 +13,7 @@ import "react-circular-progressbar/dist/styles.css";
 import {
   updateStart,
   updateSuccess,
+  stateRestart,
   updateFailure,
   deleteUserStart,
   deleteUserSuccess,
@@ -24,6 +25,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 export default function DashProfile() {
+  console.log("default render");
   const { currentUser, error, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -119,16 +121,31 @@ export default function DashProfile() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      console.log(data);
       if (!res.ok) {
         dispatch(updateFailure(data.message));
+        console.log("res not ok");
+
         setUpdateUserError(data.message);
+
+        setTimeout(() => {
+          dispatch(stateRestart());
+          setUpdateUserError(null);
+        }, 4000);
       } else {
         dispatch(updateSuccess(data));
         setUpdateUserSuccess("User's profile updated successfully");
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
+      console.log("catch error ");
+
       setUpdateUserError(error.message);
+
+      setTimeout(() => {
+        dispatch(stateRestart());
+        setUpdateUserError(null);
+      }, 4000);
     }
   };
   const handleDeleteUser = async () => {

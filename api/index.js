@@ -3,9 +3,10 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import path from "path";
+
+import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 dotenv.config();
-
 const app = express();
 app.use(express.json()); //express.json() is a middleware function that is used to parse incoming request bodies that are encoded in the JSON format. It will parse the request body and make the data available in the req.body object.
 app.use(express.urlencoded({ extended: true })); //  On the other hand, express.urlencoded() is a middleware function that is used to parse incoming request bodies that are encoded in the application/x-www-form-urlencoded format. It will also parse the request body and make the data available in the req.body object.
@@ -20,7 +21,7 @@ mongoose
     console.log(err);
   });
 
-// app.use("/api/user", userRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 // app.use('/api/post', postRoutes);
 // app.use('/api/comment', commentRoutes);
@@ -32,7 +33,7 @@ app.listen(3000, () => {
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
 
-  let message = "Internal Server Error"; // Default message
+  let message = err.message || "Internal Server Error"; // Default message
 
   // Error mapping based on error type and properties
   if (err.name === "CastError") {
