@@ -6,6 +6,7 @@ import path from "path";
 
 import postRoutes from "./routes/post.route.js";
 import userRoutes from "./routes/user.route.js";
+import commentRoutes from "./routes/comment.route.js";
 import authRoutes from "./routes/auth.route.js";
 dotenv.config();
 const app = express();
@@ -25,7 +26,7 @@ mongoose
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/post", postRoutes);
-// app.use('/api/comment', commentRoutes);
+app.use("/api/comment", commentRoutes);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000!");
