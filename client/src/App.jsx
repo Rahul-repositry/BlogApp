@@ -17,7 +17,16 @@ import PostPage from "./pages/PostPage";
 import Search from "./pages/Search";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const ErrorPage = () => {
+    return (
+      <div className=" h-screen w-full flex gap-4 justify-center tracking-wide flex-col items-center">
+        <h1 className=" text-6xl font-bold ">404 - Page Not Found</h1>
+        <p className="text-xl font-medium ">
+          The requested page could not be found.
+        </p>
+      </div>
+    );
+  };
 
   return (
     <BrowserRouter>
@@ -38,6 +47,7 @@ function App() {
 
         <Route path="/projects" element={<Projects />} />
         <Route path="/post/:postSlug" element={<PostPage />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
       <FooterCom />
     </BrowserRouter>
