@@ -26,28 +26,28 @@ export default function Header() {
   }, [location.search]);
 
   const handleSignout = async () => {
-    // try {
-    //   const res = await fetch('/api/user/signout', {
-    //     method: 'POST',
-    //   });
-    //   const data = await res.json();
-    //   if (!res.ok) {
-    //     console.log(data.message);
-    //   } else {
-    //     dispatch(signoutSuccess());
-    //   }
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
     console.log("handlesignout");
   };
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
-    // const urlParams = new URLSearchParams(location.search);
-    // urlParams.set("searchTerm", searchTerm);
-    // const searchQuery = urlParams.toString();
-    // navigate(`/search?${searchQuery}`);
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("searchTerm", searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
     console.log("handleSubmit");
   };
 
